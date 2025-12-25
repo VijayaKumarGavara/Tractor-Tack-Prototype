@@ -58,7 +58,7 @@ const DisplayFarmersList = () => {
 
         {registerForm && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg">
+            <div className="bg-light-bg dark:bg-dark-bg p-6 rounded-lg">
               <RegisterFarmer
                 type="spot-registration"
                 onClose={() => setRegisterForm(false)}

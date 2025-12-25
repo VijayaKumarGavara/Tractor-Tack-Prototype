@@ -97,7 +97,7 @@ const Navbar = ({ handleTheme, theme }) => {
           )}
         </div>
 
-        <Link to="/register-farmer">Register Farmer</Link>
+        <Link to="/register-farmer">+ New Farmer</Link>
       </nav>
 
       <div>

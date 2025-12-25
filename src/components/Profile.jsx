@@ -15,7 +15,7 @@ const Profile = () => {
     <div className="flex flex-col items-center ">
       <h2 className="font-bold text-2xl text-light-text dark:text-dark-text font-heading">Profile</h2>
 
-      <div className="py-5 px-3 max-w-2xl flex flex-col items-start gap-6 mt-10 bg-light-card dark:bg-dark-card rounded-lg shadow-lg">
+      <div className="py-5 px-3 max-w-2xl flex flex-col items-center gap-6 mt-10 bg-light-card dark:bg-dark-card rounded-lg shadow-lg">
         <h3 className="font-heading font-semibold text-xl text-light-text dark:text-dark-text">
           Name: {tractorDriver?.driver_name}
         </h3>

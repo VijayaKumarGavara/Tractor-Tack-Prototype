@@ -23,10 +23,10 @@ const MobileNavbar = () => {
   }, []);
   return (
     <>
-      <div className="w-full fixed bottom-0 md:hidden ">
+      <div className="w-full fixed bottom-0 md:hidden">
         <nav
           ref={navRef}
-          className="relative px-1 flex flex-row gap-x-3 justify-around shadow-lg min-h-12 py-2 text-light-text dark:text-dark-text bg-light-card dark:bg-dark-card font-body text-base">
+          className="relative flex flex-row gap-x-3 px-3 justify-center shadow-lg min-h-12 py-2 text-light-text dark:text-dark-text bg-light-card dark:bg-dark-card font-body text-base">
           <Link to="/">Home</Link>
 
           {/* WORK DROPDOWN */}
@@ -41,14 +41,28 @@ const MobileNavbar = () => {
             </button>
           </div>
           {showDropdown.work && (
-            <div className="absolute bottom-12 left-0 mt-2 w-full bg-light-card dark:bg-dark-card border rounded-md shadow-md flex flex-col">
+            <div className="absolute bottom-14 left-0 mt-2 w-full bg-light-card dark:bg-dark-card border rounded-md shadow-md flex flex-col">
               <Link
-                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropDown({
+                    work: !showDropdown.work,
+                    payments: false,
+                  });
+                }}
+                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2 text-center"
                 to="/new-work">
                 ➕ Add Work
               </Link>
               <Link
-                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropDown({
+                    work: !showDropdown.work,
+                    payments: false,
+                  });
+                }}
+                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2 text-center"
                 to="/work-records">
                 📄 Work Records
               </Link>
@@ -69,25 +83,46 @@ const MobileNavbar = () => {
             </button>
           </div>
           {showDropdown.payments && (
-            <div className="absolute bottom-12 left-0 mt-2 w-full bg-light-card dark:bg-dark-card border rounded-md shadow-md flex flex-col">
+            <div className="absolute bottom-14 left-0 mt-2 w-full bg-light-card dark:bg-dark-card border rounded-md shadow-md flex flex-col">
               <Link
-                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropDown({
+                    work: false,
+                    payments: !showDropdown.payments,
+                  });
+                }}
+                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2 text-center"
                 to="/payment-dues">
                 📄 Payment Dues
               </Link>
               <Link
-                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropDown({
+                    work: false,
+                    payments: !showDropdown.payments,
+                  });
+                }}
+                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2 text-center"
                 to="/payment">
-                 ₹ Make Payment
+                ₹ Make Payment
               </Link>
               <Link
-                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropDown({
+                    work: false,
+                    payments: !showDropdown.payments,
+                  });
+                }}
+                className="px-4 py-2 hover:text-light-text2 dark:hover:text-dark-text2 text-center"
                 to="/transactions">
                 📊 Transactions
               </Link>
             </div>
           )}
-          <Link to="/register-farmer">Register Farmer</Link>
+          <Link to="/register-farmer">🆕Farmer</Link>
         </nav>
       </div>
     </>

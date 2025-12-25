@@ -5,6 +5,7 @@ import { resetFarmerSearch } from "../store/farmerSearchSlice";
 
 import { workPricingConfig } from "../utils/workPricingConfig";
 import getPricingContext from "../utils/getPricing";
+import { API_URL } from "../utils/constant";
 const AddWork = ({ farmer_id }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("tractor_token");
@@ -38,7 +39,7 @@ const AddWork = ({ farmer_id }) => {
       work_date: new Date().toISOString().split("T")[0],
     };
 
-    const res = await fetch("http://localhost:3000/api/tractor-works", {
+    const res = await fetch(`${API_URL}api/tractor-works`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,7 +72,7 @@ const AddWork = ({ farmer_id }) => {
   return (
     <>
       <div className="flex gap-4 justify-center items-center">
-        <label className="px-2 mt-5">Select</label>
+        <label className="px-2 mt-5 text-light-text dark:text-dark-text">Select</label>
 
         <select
           required
@@ -101,14 +102,14 @@ const AddWork = ({ farmer_id }) => {
       {/* Dynamic rendering */}
       {selectedConfig && (
         <div className="mt-6 text-center">
-          <h3 className="font-semibold text-lg">{selectedConfig.label} Form</h3>
+          <h3 className="font-semibold text-lg text-light-text dark:text-dark-text">{selectedConfig.label} Form</h3>
 
           {/* Loading */}
           {form.workType === "loading" && (
             <form
               className="flex flex-col items-center mt-3 gap-4"
               onSubmit={handleSubmitWork}>
-              <p>Unit: {selectedConfig.unit}</p>
+              <p className="text-white">Unit: {selectedConfig.unit}</p>
 
               <input
                 type="number"
@@ -121,7 +122,7 @@ const AddWork = ({ farmer_id }) => {
               />
 
               <input
-                type="number"
+                type="text"
                 name="rate"
                 placeholder="Cost per Load"
                 className="border rounded-md p-3"

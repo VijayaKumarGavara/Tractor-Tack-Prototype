@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedFarmer } from "../store/farmerSearchSlice";
+import { API_URL } from "../utils/constant";
 const PaymentDues = () => {
   const [paymentDues, setPaymentDues] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
@@ -11,7 +12,7 @@ const PaymentDues = () => {
   useEffect(() => {
     async function getPaymentDues() {
       try {
-        const res = await fetch("http://localhost:3000/api/payment-dues", {
+        const res = await fetch(`${API_URL}api/payment-dues`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,13 +48,13 @@ const PaymentDues = () => {
   if (hasSearched && !paymentDues)
     return (
       <div className="mt-10 flex flex-col items-center ">
-        <h2 className="font-bold text-2xl">No Payment Dues For You..!</h2>
+        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">No Payment Dues For You..!</h2>
       </div>
     );
   if (!hasSearched && !paymentDues)
     return (
       <div className="mt-10 flex flex-col items-center ">
-        <h2 className="font-bold text-2xl">Getting your payment dues..!</h2>
+        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">Getting your payment dues..!</h2>
       </div>
     );
   return (
@@ -80,15 +81,16 @@ const PaymentDues = () => {
                   {" "}
                   ₹{pd.amount_due} Due
                 </div>
-                <div className="text-base font-medium text-green-600">
+                <div className="text-base font-medium text-green-600 ">
                   Paid: ₹{pd.amount_paid}
                 </div>
               </div>
               <div className="text-sm text-light-text dark:text-dark-text mt-1 flex justify-center gap-8">
                 <button
+                  disabled={pd.amount_due<=0}
                   type="button"
                   onClick={()=>handlePayNow(pd)}
-                  className="px-3 py-1 bg-success rounded-md ">
+                  className={`px-3 py-1 bg-success rounded-md hover:${pd.amount_due===0?"cursor-default":"cursor-pointer"}`}>
                   Pay Now
                 </button>
                 <button

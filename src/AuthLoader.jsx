@@ -4,6 +4,7 @@ import {
   setAuthChecked,
   setLoggedInTractorDriver,
 } from "./store/tractorDriverSlice";
+import { API_URL } from "./utils/constant";
 
 const AuthLoader = ({ children }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const AuthLoader = ({ children }) => {
     async function verify() {
       try {
         const res = await fetch(
-          "http://localhost:3000/api/tractor-drivers/me",
+          `${API_URL}api/tractor-drivers/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

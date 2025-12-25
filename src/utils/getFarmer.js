@@ -1,3 +1,5 @@
+import { API_URL } from "./constant";
+
 async function getFarmer(
   formName,
   name = null,
@@ -5,7 +7,7 @@ async function getFarmer(
   mobile = null,
   id = null
 ) {
-  let url = "http://localhost:3000/api/farmers";
+  let url = `${API_URL}api/farmers`;
   const token = localStorage.getItem("tractor_token");
   if (formName === "name+village") {
     url += `?name=${encodeURIComponent(name)}&village=${encodeURIComponent(

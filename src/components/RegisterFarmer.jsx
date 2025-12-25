@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setSelectedFarmer } from "../store/farmerSearchSlice";
+import { API_URL } from "../utils/constant";
 const RegisterFarmer = ({ type, onClose, closeOption }) => {
   const dispatch = useDispatch();
   const [form, setForm] = useState({ name: "", village: "", mobile: "" });
@@ -18,7 +19,7 @@ const RegisterFarmer = ({ type, onClose, closeOption }) => {
     const token = localStorage.getItem("tractor_token");
 
     try {
-      const res = await fetch("http://localhost:3000/api/farmers", {
+      const res = await fetch(`${API_URL}api/farmers`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,7 +53,7 @@ const RegisterFarmer = ({ type, onClose, closeOption }) => {
       {closeOption && (
         <div className="flex flex-row gap-x-44">
           <div className="max-w-xl"></div>
-          <button className=" px-2 border rounded-md" onClick={() => onClose()}>
+          <button className=" px-2 border rounded-md text-light-text dark:text-dark-text" onClick={() => onClose()}>
             X
           </button>
         </div>

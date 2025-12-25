@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import FindFarmer from "./FindFarmer";
 import { resetFarmerSearch } from "../store/farmerSearchSlice";
-import AddWork from "./AddWork";
+import AddWork from "./AddWorkForm";
 import { useEffect } from "react";
 
 const NewWork = () => {
@@ -25,8 +25,8 @@ const NewWork = () => {
       {/* STEP 2: Farmer selected → show summary */}
       {selectedFarmer && (
         <div>
-          <div className="mt-4 flex gap-x-2 items-center">
-            <span className="font-medium">Farmer:</span>
+          <div className="mt-4 flex gap-x-2 items-center text-light-text dark:text-dark-text">
+            <span className="font-medium ">Farmer:</span>
             <span>{selectedFarmer.name}</span>
             <span>{selectedFarmer.village}</span>
 

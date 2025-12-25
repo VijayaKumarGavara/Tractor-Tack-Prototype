@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../utils/constant";
 
 const WorkRecords = () => {
   const [tractorWorks, setTractorWorks] = useState([]);
@@ -8,7 +9,7 @@ const WorkRecords = () => {
       const token = localStorage.getItem("tractor_token");
 
       try {
-        const res = await fetch("http://localhost:3000/api/tractor-works", {
+        const res = await fetch(`${API_URL}api/tractor-works`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -16,7 +17,7 @@ const WorkRecords = () => {
           },
         });
         if (!res.ok) {
-          console.error("Failed to fetch payment dues");
+          console.error("Failed to fetch work records");
           return;
         }
         const data = await res.json();
@@ -32,14 +33,14 @@ const WorkRecords = () => {
   if (!hasSearched && !tractorWorks) {
     return (
       <div className="mt-10 flex flex-col items-center ">
-        <h2 className="font-bold text-2xl">Getting your work records..!</h2>
+        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">Getting your work records..!</h2>
       </div>
     );
   }
   if (hasSearched && !tractorWorks) {
     return (
       <div className="mt-10 flex flex-col items-center ">
-        <h2 className="font-bold text-2xl">No Records Found..</h2>
+        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">No Records Found..</h2>
       </div>
     );
   }
@@ -50,7 +51,7 @@ const WorkRecords = () => {
           Work Records
         </h2>
 
-        <div className="w-full max-w-md px-3 space-y-4 mb-16">
+        <div className="mt-10 w-full max-w-md px-3 space-y-4 mb-16">
           {tractorWorks.map((r, idx) => (
             <div
               key={idx}

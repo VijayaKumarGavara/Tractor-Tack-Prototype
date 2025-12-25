@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoggedInTractorDriver } from "../store/tractorDriverSlice";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/constant";
 
 const LoginTractorDriver = () => {
   const dispatch = useDispatch();
@@ -10,25 +11,24 @@ const LoginTractorDriver = () => {
     driver_password: "shanmukh@2004",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   async function handleLogin(e) {
+    setLoading(true);
     e.preventDefault();
     const payload = {
       driver_mobile: formData.driver_mobile,
       driver_password: formData.driver_password,
     };
     try {
-      const res = await fetch(
-        "http://localhost:3000/api/tractor-drivers/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch(`${API_URL}api/tractor-drivers/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const data = await res.json();
       if (data.success) {
@@ -41,6 +41,7 @@ const LoginTractorDriver = () => {
     } catch (error) {
       alert(error.message);
     }
+    setLoading(false);
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-light-card dark:bg-dark-card">
@@ -81,9 +82,10 @@ const LoginTractorDriver = () => {
           </div>
           <div className="flex gap-6 ">
             <button
+              disabled={loading}
               type="submit"
               className="bg-success text-light-text dark:text-dark-text font-medium w-max px-3 py-2 rounded-md ">
-              Login
+              {loading ? "Loading..." : "Login"}
             </button>
             <button
               type="button"

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from "../utils/constant";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState(null);
@@ -6,7 +7,7 @@ const Transactions = () => {
   useEffect(() => {
     async function getTransactions() {
       const token = localStorage.getItem("tractor_token");
-      const res = await fetch("http://localhost:3000/api/transactions", {
+      const res = await fetch(`${API_URL}api/transactions`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -22,9 +23,26 @@ const Transactions = () => {
     }
     getTransactions();
   }, []);
-  if (!transactions) return <>Loading Transactions...</>;
+  if (!transactions)
+    return (
+      <>
+        <div className="mt-10 flex flex-col items-center">
+          <h2 className="font-bold text-2xl font-heading text-light-text dark:text-dark-text">
+            Loading Your Transactions......
+          </h2>
+        </div>
+      </>
+    );
   if (transactions && transactions.length === 0)
-    return <>No Transactions Yet...</>;
+    return (
+      <>
+        <div className="mt-10 flex flex-col items-center">
+          <h2 className="font-bold text-2xl font-heading text-light-text dark:text-dark-text">
+            No Transactions Yet...
+          </h2>
+        </div>
+      </>
+    );
   return (
     <>
       <div className="mt-10 flex flex-col items-center">
@@ -41,7 +59,9 @@ const Transactions = () => {
                 <div className="text-xl font-semibold text-green-600">
                   + ₹{t.amount}
                 </div>
-                <div className="text-sm mt-1 opacity-70 text-light-text dark:text-dark-text">{t.payment_date}</div>
+                <div className="text-sm mt-1 opacity-70 text-light-text dark:text-dark-text">
+                  {t.payment_date}
+                </div>
               </div>
               <div className="text-sm text-light-text2 dark:text-dark-text2 mt-1">
                 {t.name} • {t.payment_mode.toUpperCase()}
