@@ -12,6 +12,7 @@ const Payment = () => {
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [isPaymentFormOpen, setIsPaymentFormOpen] = useState(false);
   const [showInvoice, setShowInvoice] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [payment, setPayment] = useState({ amount: "", mode: "" });
 
@@ -57,7 +58,7 @@ const Payment = () => {
 
   async function handlePayment(e) {
     e.preventDefault();
-
+    setIsSubmitting(true);
     const payAmount = Number(payment.amount);
 
     if (payAmount <= 0) return alert("Enter valid amount");
@@ -70,23 +71,25 @@ const Payment = () => {
       amount: payAmount,
       payment_mode: payment.mode.trim().toLowerCase(),
     };
+    try {
+      const res = await fetch(`${API_URL}api/payment`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-    const res = await fetch(`${API_URL}api/payment`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-    if (!data.success) {
-      return alert(data.message || "Payment failed");
+      const data = await res.json();
+      console.log(data);
+      setPaymentCompleted(true);
+      setShowInvoice(true);
+    } catch (error) {
+      return alert(error.message || "Payment failed");
+    } finally {
+      setIsSubmitting(false);
     }
-    alert("Payment successful");
-    setPaymentCompleted(true);
-    setShowInvoice(true);
   }
   useEffect(() => {
     if (!cameFromDues) {
@@ -233,8 +236,9 @@ const Payment = () => {
             />
 
             <div className="flex gap-6">
-              <button className="border rounded-md bg-success text-white px-3 py-1">
-                Paid
+              <button disabled={isSubmitting}
+              className="border rounded-md bg-success text-white px-3 py-1">
+                {isSubmitting ? "Processing.." : "Paid"}
               </button>
 
               <button

@@ -21,10 +21,11 @@ const WorkRecords = () => {
           return;
         }
         const data = await res.json();
-        setHasSearched(true);
         setTractorWorks(data.data);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setHasSearched(true);
       }
     }
     getTractorWorks();
@@ -33,14 +34,18 @@ const WorkRecords = () => {
   if (!hasSearched && !tractorWorks) {
     return (
       <div className="mt-10 flex flex-col items-center ">
-        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">Getting your work records..!</h2>
+        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
+          Getting your work records..!
+        </h2>
       </div>
     );
   }
   if (hasSearched && !tractorWorks) {
     return (
       <div className="mt-10 flex flex-col items-center ">
-        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">No Records Found..</h2>
+        <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
+          No Records Found..
+        </h2>
       </div>
     );
   }
@@ -58,7 +63,9 @@ const WorkRecords = () => {
               className="bg-light-card dark:bg-dark-card rounded-lg p-4 shadow-sm border border-light-border dark:border-dark-border">
               {/* HEADER */}
               <div className="flex justify-between items-center text-sm opacity-70">
-                <span className="text-light-text2 dark:text-dark-text2">{r.work_date}</span>
+                <span className="text-light-text2 dark:text-dark-text2">
+                  {r.work_date}
+                </span>
                 <span className="font-semibold text-success">
                   ₹{r.total_amount}
                 </span>
@@ -69,9 +76,12 @@ const WorkRecords = () => {
                 <p className="font-medium text-light-text dark:text-dark-text">
                   {r.name}
                 </p>
-                <p className="text-sm opacity-80 text-light-text2 dark:text-dark-text2">{r.work_type} {r.pricing_context
-                      ? ` | (${Object.values(r.pricing_context)[0]})`
-                      : ""}</p>
+                <p className="text-sm opacity-80 text-light-text2 dark:text-dark-text2">
+                  {r.work_type}{" "}
+                  {r.pricing_context
+                    ? ` | (${Object.values(r.pricing_context)[0]})`
+                    : ""}
+                </p>
               </div>
 
               {/* QTY + RATE */}
@@ -86,7 +96,9 @@ const WorkRecords = () => {
 
               {/* NOTES */}
               {r.notes && (
-                <p className="mt-2 text-xs italic opacity-60 text-light-text2 dark:text-dark-text2">📝 {r.notes}</p>
+                <p className="mt-2 text-xs italic opacity-60 text-light-text2 dark:text-dark-text2">
+                  📝 {r.notes}
+                </p>
               )}
             </div>
           ))}

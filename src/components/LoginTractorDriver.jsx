@@ -7,8 +7,8 @@ import { API_URL } from "../utils/constant";
 const LoginTractorDriver = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    driver_mobile: "9515976994",
-    driver_password: "shanmukh@2004",
+    driver_mobile: "",
+    driver_password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -91,8 +91,8 @@ const LoginTractorDriver = () => {
               type="button"
               onClick={() =>
                 setFormData({
-                  driver_mobile: "9515976994",
-                  driver_password: "shanmukh@2004",
+                  driver_mobile: "",
+                  driver_password: "",
                 })
               }
               className="bg-danger text-light-text dark:text-dark-text font-medium px-3 py-2 rounded-md ">

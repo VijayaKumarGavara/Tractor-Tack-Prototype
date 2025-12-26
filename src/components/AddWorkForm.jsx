@@ -9,7 +9,7 @@ import { API_URL } from "../utils/constant";
 const AddWork = ({ farmer_id }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("tractor_token");
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     workType: "",
     mission: "",
@@ -27,7 +27,7 @@ const AddWork = ({ farmer_id }) => {
 
   async function handleSubmitWork(e) {
     e.preventDefault();
-
+    setIsSubmitting(true);
     const payload = {
       farmer_id,
       work_type: form.workType,
@@ -38,32 +38,35 @@ const AddWork = ({ farmer_id }) => {
       rate: Number(form.rate),
       work_date: new Date().toISOString().split("T")[0],
     };
-
-    const res = await fetch(`${API_URL}api/tractor-works`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert("Work added successfully");
-      dispatch(resetFarmerSearch());
-      setForm({
-        workType: "",
-        mission: "",
-        crop: "",
-        quantity: "",
-        rate: "",
-        unit: "",
-        notes: "",
+    try {
+      const res = await fetch(`${API_URL}api/tractor-works`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
-    } else {
-      alert("Failed to add work");
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Work added successfully");
+        dispatch(resetFarmerSearch());
+        setForm({
+          workType: "",
+          mission: "",
+          crop: "",
+          quantity: "",
+          rate: "",
+          unit: "",
+          notes: "",
+        });
+      }
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -72,7 +75,9 @@ const AddWork = ({ farmer_id }) => {
   return (
     <>
       <div className="flex gap-4 justify-center items-center">
-        <label className="px-2 mt-5 text-light-text dark:text-dark-text">Select</label>
+        <label className="px-2 mt-5 text-light-text dark:text-dark-text">
+          Select
+        </label>
 
         <select
           required
@@ -102,7 +107,9 @@ const AddWork = ({ farmer_id }) => {
       {/* Dynamic rendering */}
       {selectedConfig && (
         <div className="mt-6 text-center">
-          <h3 className="font-semibold text-lg text-light-text dark:text-dark-text">{selectedConfig.label} Form</h3>
+          <h3 className="font-semibold text-lg text-light-text dark:text-dark-text">
+            {selectedConfig.label} Form
+          </h3>
 
           {/* Loading */}
           {form.workType === "loading" && (
@@ -139,8 +146,10 @@ const AddWork = ({ farmer_id }) => {
                 value={form.notes}
                 onChange={handleChange}
               />
-              <button className="px-3 py-2 bg-green-500 text-white rounded-md">
-                Add
+              <button
+                className={`px-3 py-2 bg-green-500 text-white rounded-md`}
+                disabled={isSubmitting}>
+                {isSubmitting ? "Adding...." : "Add"}
               </button>
             </form>
           )}
@@ -201,8 +210,10 @@ const AddWork = ({ farmer_id }) => {
                     value={form.notes}
                     onChange={handleChange}
                   />
-                  <button className="px-3 py-2 bg-green-500 text-white rounded-md">
-                    Add
+                  <button
+                    className={`px-3 py-2 bg-green-500 text-white rounded-md`}
+                    disabled={isSubmitting}>
+                    {isSubmitting ? "Adding...." : "Add"}
                   </button>
                 </form>
               )}
@@ -265,8 +276,10 @@ const AddWork = ({ farmer_id }) => {
                     value={form.notes}
                     onChange={handleChange}
                   />
-                  <button className="px-3 py-2 bg-green-500 text-white rounded-md">
-                    Add
+                  <button
+                    className={`px-3 py-2 bg-green-500 text-white rounded-md`}
+                    disabled={isSubmitting}>
+                    {isSubmitting ? "Adding...." : "Add"}
                   </button>
                 </form>
               )}

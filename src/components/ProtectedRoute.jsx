@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Navigate,Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 const ProtectedRoute = () => {
   const { loggedInTractorDriver, authCheck } = useSelector(
     (state) => state.tractorDriver
