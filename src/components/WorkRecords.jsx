@@ -31,7 +31,7 @@ const WorkRecords = () => {
     getTractorWorks();
   }, []);
 
-  if (!hasSearched && !tractorWorks) {
+  if (!hasSearched && tractorWorks===0) {
     return (
       <div className="mt-10 flex flex-col items-center ">
         <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
@@ -40,7 +40,7 @@ const WorkRecords = () => {
       </div>
     );
   }
-  if (hasSearched && !tractorWorks) {
+  if (hasSearched && tractorWorks.length===0) {
     return (
       <div className="mt-10 flex flex-col items-center ">
         <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">

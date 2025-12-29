@@ -45,7 +45,7 @@ const PaymentDues = () => {
       state: { fromDues: true },
     });
   }
-  if (hasSearched && !paymentDues)
+  if (hasSearched && paymentDues===0)
     return (
       <div className="mt-10 flex flex-col items-center ">
         <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
@@ -53,7 +53,7 @@ const PaymentDues = () => {
         </h2>
       </div>
     );
-  if (!hasSearched && !paymentDues)
+  if (!hasSearched && paymentDues===0)
     return (
       <div className="mt-10 flex flex-col items-center ">
         <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
