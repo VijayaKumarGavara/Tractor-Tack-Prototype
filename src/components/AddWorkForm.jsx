@@ -119,7 +119,7 @@ const AddWork = ({ farmer_id }) => {
               <p className="text-white">Unit: {selectedConfig.unit}</p>
 
               <input
-                type="number"
+                type="text"
                 name="quantity"
                 placeholder="Number of Loads"
                 className="border rounded-md p-3"
@@ -183,7 +183,7 @@ const AddWork = ({ farmer_id }) => {
                   <p>Unit: {form.unit}</p>
 
                   <input
-                    type="number"
+                    type="text"
                     name="quantity"
                     placeholder="Number of Hours"
                     className="border rounded-md p-3"
@@ -249,7 +249,7 @@ const AddWork = ({ farmer_id }) => {
                   <p>Unit: {form.unit}</p>
 
                   <input
-                    type="number"
+                    type="text"
                     name="quantity"
                     placeholder={`Quantity (${form.unit})`}
                     className="border rounded-md p-3"
