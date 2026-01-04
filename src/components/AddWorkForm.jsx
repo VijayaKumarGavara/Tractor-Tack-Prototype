@@ -116,7 +116,7 @@ const AddWork = ({ farmer_id }) => {
             <form
               className="flex flex-col items-center mt-3 gap-4"
               onSubmit={handleSubmitWork}>
-              <p className="text-white">Unit: {selectedConfig.unit}</p>
+              <p className="text-light-text dark:text-dark-text">Unit: {selectedConfig.unit}</p>
 
               <input
                 type="text"
@@ -180,7 +180,7 @@ const AddWork = ({ farmer_id }) => {
                 <form
                   className="flex flex-col items-center gap-4"
                   onSubmit={handleSubmitWork}>
-                  <p>Unit: {form.unit}</p>
+                  <p className="text-light-text dark:text-dark-text">Unit: {form.unit}</p>
 
                   <input
                     type="text"
@@ -246,7 +246,7 @@ const AddWork = ({ farmer_id }) => {
                 <form
                   className="flex flex-col items-center gap-4"
                   onSubmit={handleSubmitWork}>
-                  <p>Unit: {form.unit}</p>
+                  <p className="text-light-text dark:text-dark-text">Unit: {form.unit}</p>
 
                   <input
                     type="text"

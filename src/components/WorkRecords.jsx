@@ -4,6 +4,8 @@ import { API_URL } from "../utils/constant";
 const WorkRecords = () => {
   const [tractorWorks, setTractorWorks] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const token = localStorage.getItem("tractor_token");
+
   useEffect(() => {
     async function getTractorWorks() {
       const token = localStorage.getItem("tractor_token");
@@ -31,7 +33,7 @@ const WorkRecords = () => {
     getTractorWorks();
   }, []);
 
-  if (!hasSearched && tractorWorks===0) {
+  if (!hasSearched && tractorWorks === 0) {
     return (
       <div className="mt-10 flex flex-col items-center ">
         <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
@@ -40,7 +42,7 @@ const WorkRecords = () => {
       </div>
     );
   }
-  if (hasSearched && tractorWorks.length===0) {
+  if (hasSearched && tractorWorks.length === 0) {
     return (
       <div className="mt-10 flex flex-col items-center ">
         <h2 className="font-bold text-2xl text-light-text dark:text-dark-text">
@@ -49,6 +51,41 @@ const WorkRecords = () => {
       </div>
     );
   }
+
+  async function handleEdit(e) {
+    e.preventDefault();
+  }
+
+  async function handleDelete(work) {
+    const isConfirmed = confirm("Are you sure you want to delete?");
+    if (!isConfirmed) return;
+
+    try {
+      const res = await fetch(`${API_URL}api/tractor-works`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          work_id: work.work_id,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        return alert(data.message || "Failed to delete work record");
+      }
+
+      alert("Successfully deleted.");
+      // refresh list here
+    } catch (error) {
+      console.error(error);
+      alert("Delete failed");
+    }
+  }
+
   return (
     <>
       <div className="mt-10 flex flex-col items-center ">
@@ -87,7 +124,7 @@ const WorkRecords = () => {
               {/* QTY + RATE */}
               <div className="mt-2 flex justify-between text-sm text-light-text2 dark:text-dark-text2">
                 <span>
-                  Qty: {r.quantity} {r.unit_type}
+                  Qty: {r.quantity.toString().slice(0, -2)} {r.unit_type}
                 </span>
                 <span>
                   @ ₹{r.rate} / {r.unit_type}
@@ -100,6 +137,21 @@ const WorkRecords = () => {
                   📝 {r.notes}
                 </p>
               )}
+
+              <div className="w-full flex justify-center gap-x-10 mt-2">
+                <button
+                  className="px-2 py-1 text-light-text dark:text-dark-text rounded-sm bg-accent"
+                  onClick={handleEdit}>
+                  Edit
+                </button>
+                <button
+                  className="px-2 py-1 text-light-text dark:text-dark-text rounded-sm bg-danger"
+                  onClick={() => {
+                    handleDelete(r);
+                  }}>
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

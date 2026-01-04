@@ -5,7 +5,7 @@ const ProtectedRoute = () => {
     (state) => state.tractorDriver
   );
 
-  if (!authCheck) return <div>Checking session...</div>;
+  if (!authCheck) return <div className="text-light-text dark:text-dark-text">Checking session...</div>;
 
   if (!loggedInTractorDriver) {
     return <Navigate to="/login/tractor-driver" replace />;

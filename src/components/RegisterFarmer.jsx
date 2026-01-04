@@ -31,9 +31,10 @@ const RegisterFarmer = ({ type, onClose, closeOption }) => {
 
       if (data.success) {
         alert("Farmer registered successfully");
+        setForm({ name: "", village: "", mobile: "" });
         if (type === "spot-registration") {
           dispatch(setSelectedFarmer(data?.data));
-          setForm({ name: "", village: "", mobile: "" });
+          
 
           if (onClose) onClose();
         }
